@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="Add_Customer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomer">
+   <children>
+      <Button fx:id="addCustomerSaveButton" layoutX="155.0" layoutY="416.0" mnemonicParsing="false" onAction="#onActionAddCustomerSaveButton" text="Save" />
+      <Button fx:id="addCustomerCancelButton" layoutX="215.0" layoutY="416.0" mnemonicParsing="false" onAction="#onActionAddCustomerCancelButton" text="Cancel" />
+      <TextField fx:id="nameTextBox" layoutX="92.0" layoutY="89.0" onAction="#onActionNameTextBox" />
+      <TextField fx:id="addressTextBox" layoutX="92.0" layoutY="138.0" onAction="#onActionAddressTextBox" />
+      <TextField fx:id="postalCodeTextBox" layoutX="92.0" layoutY="187.0" onAction="#onActionPostCodeTextBox" />
+      <ComboBox fx:id="SecondLevelComboBox" layoutX="91.0" layoutY="328.0" onAction="#onActionSecondLevelComboBox" prefWidth="150.0" />
+      <ComboBox fx:id="FirstLevelComboBox" layoutX="91.0" layoutY="279.0" onAction="#onActionFirstLevelComboBox" prefWidth="150.0" promptText="Country" />
+      <TextField fx:id="userIDTextBox" layoutX="92.0" layoutY="42.0" onAction="#onActionUserIDTextBox" />
+      <Label fx:id="userIDLabel" layoutX="21.0" layoutY="46.0" text="User ID:" />
+      <Label fx:id="nameLabel" layoutX="21.0" layoutY="93.0" text="Name:" />
+      <Label fx:id="addressLabel" layoutX="21.0" layoutY="142.0" text="Address:" />
+      <Label fx:id="postalCodeLabel" layoutX="11.0" layoutY="191.0" text="Postal Code:" />
+      <Label fx:id="firstlevelLabel" layoutX="21.0" layoutY="283.0" text="Country:" />
+      <Label fx:id="secondLevelLabel" layoutX="30.0" layoutY="332.0" text="Label" />
+      <TextField fx:id="telephoneTextBox" layoutX="92.0" layoutY="232.0" onAction="#onActionTelephoneTextBox" />
+      <Label fx:id="telephoneLabel" layoutX="9.0" layoutY="236.0" text="Telephone #:" />
+   </children>
+</Pane>

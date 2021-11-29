@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="Add_Customer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateCustomer">
+   <children>
+      <Button fx:id="updateCustomerSaveButton" layoutX="155.0" layoutY="416.0" mnemonicParsing="false" onAction="#onActionUpdateCustomerSaveButton" text="Save" />
+      <Button fx:id="updateCustomerCancelButton" layoutX="215.0" layoutY="416.0" mnemonicParsing="false" onAction="#onActionUpdateCustomerCancelButton" text="Cancel" />
+      <TextField fx:id="updateCustomerNameTextBox" layoutX="92.0" layoutY="89.0" onAction="#onActionUpdateCustomerNameTextBox" />
+      <TextField fx:id="updateCustomerAddressTextBox" layoutX="92.0" layoutY="138.0" onAction="#onActionUpdateCustomerAddressTextBox" />
+      <TextField fx:id="updateCustomerPostalCodeTextBox" layoutX="92.0" layoutY="187.0" onAction="#onActionUpdateCustomerPostalCodeTextBox" />
+      <ComboBox fx:id="updateCustomerSecondLevelComboBox" layoutX="91.0" layoutY="328.0" onAction="#onActionUpdateCustomerSecondLevelComboBox" prefWidth="150.0" />
+      <ComboBox fx:id="updateCustomerFirstLevelComboBox" layoutX="91.0" layoutY="279.0" onAction="#onActionUpdateCustomerFirstLevelComboBox" prefWidth="150.0" promptText="Country" />
+      <TextField fx:id="updateCustomerUserIDTextBox" layoutX="92.0" layoutY="42.0" onAction="#onActionUpdateCustomerUserIDTextBox" />
+      <Label fx:id="userIDLabel" layoutX="21.0" layoutY="46.0" text="User ID:" />
+      <Label fx:id="nameLabel" layoutX="21.0" layoutY="93.0" text="Name:" />
+      <Label fx:id="addressLabel" layoutX="21.0" layoutY="142.0" text="Address:" />
+      <Label fx:id="postalCodeLabel" layoutX="11.0" layoutY="191.0" text="Postal Code:" />
+      <Label fx:id="firstlevelLabel" layoutX="21.0" layoutY="283.0" text="Country:" />
+      <Label fx:id="secondLevelLabel" layoutX="30.0" layoutY="332.0" text="Label" />
+      <TextField fx:id="updateCustomerTelephoneTextBox" layoutX="92.0" layoutY="232.0" onAction="#onActionUpdateCustomerTelephoneTextBox" />
+      <Label fx:id="telephoneLabel" layoutX="9.0" layoutY="236.0" text="Telephone #:" />
+   </children>
+</Pane>
