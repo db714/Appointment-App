@@ -8,29 +8,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="MainScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreen">
+<TabPane fx:id="MainScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="773.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreen">
   <tabs>
     <Tab fx:id="CustomersTab" text="Customers">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="390.0" prefWidth="690.0">
                <children>
-                  <TableView layoutX="180.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="customerTableview" layoutX="112.0" layoutY="80.0" prefHeight="200.0" prefWidth="523.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="custIDColumn" prefWidth="75.0" text="Customer ID" />
+                      <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="addressColumn" prefWidth="75.0" text="Address" />
+                        <TableColumn fx:id="telephoneColumn" prefWidth="75.0" text="Telephone #" />
+                        <TableColumn fx:id="divisionColumn" prefWidth="75.0" text="State/Province/Region" />
+                        <TableColumn fx:id="countryColumn" prefWidth="75.0" text="Country" />
+                        <TableColumn fx:id="postalCodeColumn" prefWidth="75.0" text="Postal Code" />
                     </columns>
                   </TableView>
-                  <Button fx:id="mainAddCustomerButton" layoutX="487.0" layoutY="218.0" mnemonicParsing="false" onAction="#onActionMainAddCustomerButton" text="Add Customer">
+                  <Button fx:id="mainAddCustomerButton" layoutX="625.0" layoutY="295.0" mnemonicParsing="false" onAction="#onActionMainAddCustomerButton" prefHeight="23.0" prefWidth="111.0" text="Add Customer">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="mainUpdateCustomerButton" layoutX="479.0" layoutY="261.0" mnemonicParsing="false" onAction="#onActionMainUpdateCustomerButton" text="Update Customer">
+                  <Button fx:id="mainUpdateCustomerButton" layoutX="625.0" layoutY="326.0" mnemonicParsing="false" onAction="#onActionMainUpdateCustomerButton" text="Update Customer">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="mainDeleteCustomerButton" layoutX="481.0" layoutY="307.0" mnemonicParsing="false" onAction="#onActionMainDeleteCustomerButton" text="Delete Customer">
+                  <Button fx:id="mainDeleteCustomerButton" layoutX="625.0" layoutY="359.0" mnemonicParsing="false" onAction="#onActionMainDeleteCustomerButton" prefHeight="23.0" prefWidth="112.0" text="Delete Customer">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
@@ -40,25 +45,33 @@
     </Tab>
     <Tab fx:id="AppointmentsTab" text="Appointments">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="389.0" prefWidth="691.0">
                <children>
-                  <TableView fx:id="mainScreenAppointmentTableview" layoutX="154.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="mainScreenAppointmentTableview" layoutX="17.0" layoutY="65.0" prefHeight="200.0" prefWidth="742.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="apptIDCol" prefWidth="52.0" text="Appt. ID" />
+                      <TableColumn fx:id="apptTitleCol" prefWidth="70.0" text="Title" />
+                        <TableColumn fx:id="apptDescCol" prefWidth="93.0" text="Description" />
+                        <TableColumn fx:id="apptLocCol" prefWidth="89.0" text="Location" />
+                        <TableColumn fx:id="apptTypeCol" prefWidth="47.0" text="Type" />
+                        <TableColumn fx:id="apptSTimeCol" prefWidth="114.0" text="Start Time" />
+                        <TableColumn fx:id="apptETimeCol" prefWidth="116.0" text="End Time" />
+                        <TableColumn fx:id="apptCustIDCol" prefWidth="48.0" text="Cust. ID" />
+                        <TableColumn fx:id="apptUsrIDCol" prefWidth="47.0" text="User ID" />
+                        <TableColumn fx:id="apptConIDCol" prefWidth="65.0" text="Contact ID" />
                     </columns>
                   </TableView>
-                  <Button fx:id="mainScreenAddAppointmentButton" layoutX="459.0" layoutY="165.0" mnemonicParsing="false" onAction="#onActionMainScreenAddAppointmentButton" text="Add Appointment">
+                  <Button fx:id="mainScreenAddAppointmentButton" layoutX="626.0" layoutY="271.0" mnemonicParsing="false" onAction="#onActionMainScreenAddAppointmentButton" prefHeight="23.0" prefWidth="126.0" text="Add Appointment">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="mainScreenUpdateAppointmentButton" layoutX="459.0" layoutY="208.0" mnemonicParsing="false" onAction="#onActionMainScreenUpdateAppointmentButton" text="Update Appointment">
+                  <Button fx:id="mainScreenUpdateAppointmentButton" layoutX="626.0" layoutY="309.0" mnemonicParsing="false" onAction="#onActionMainScreenUpdateAppointmentButton" text="Update Appointment">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="mainScreenDeleteAppointmentButton" layoutX="460.0" layoutY="253.0" mnemonicParsing="false" onAction="#onActionMainScreenDeleteAppointmentButton" text="Delete Appointment" />
+                  <Button fx:id="mainScreenDeleteAppointmentButton" layoutX="627.0" layoutY="346.0" mnemonicParsing="false" onAction="#onActionMainScreenDeleteAppointmentButton" text="Delete Appointment" />
                </children></AnchorPane>
       </content>
     </Tab>

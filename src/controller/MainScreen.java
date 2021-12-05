@@ -1,28 +1,26 @@
 package controller;
 
+import DBAccess.DBAppointments;
+import DBAccess.DBCustomers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-
-import javafx.event.ActionEvent;
-//import model.*;
+import model.Customers;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.EventObject;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import javafx.fxml.Initializable;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import model.*;
 
 public class MainScreen implements Initializable{
 
@@ -32,6 +30,29 @@ public class MainScreen implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Made it to the Main Screen");
+
+        customerTableview.setItems(DBCustomers.getAllCustomers());
+
+        custIDColumn.setCellValueFactory(new PropertyValueFactory<>("custId"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("custName"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("custAddress"));
+        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNum"));
+        divisionColumn.setCellValueFactory(new PropertyValueFactory<>("custDiv"));
+        countryColumn.setCellValueFactory(new PropertyValueFactory<>("custCntry"));
+        postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postCode"));
+
+        mainScreenAppointmentTableview.setItems(DBAppointments.getAllAppointments());
+
+        apptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptId"));
+        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("apptTitle"));
+        apptDescCol.setCellValueFactory(new PropertyValueFactory<>("apptDscrptn"));
+        apptLocCol.setCellValueFactory(new PropertyValueFactory<>("apptLctn"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("apptType"));
+        apptSTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        apptETimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        apptCustIDCol.setCellValueFactory(new PropertyValueFactory<>("apptCustId"));
+        apptUsrIDCol.setCellValueFactory(new PropertyValueFactory<>("apptUsrId"));
+        apptConIDCol.setCellValueFactory(new PropertyValueFactory<>("apptCntctId"));
 
 
     }
@@ -61,13 +82,69 @@ public class MainScreen implements Initializable{
     private Button mainScreenAddAppointmentButton;
 
     @FXML
-    private TableView<?> mainScreenAppointmentTableview;
+    private TableView<Appointments> mainScreenAppointmentTableview;
 
     @FXML
     private Button mainScreenDeleteAppointmentButton;
 
     @FXML
     private Button mainScreenUpdateAppointmentButton;
+
+    @FXML
+    private TableView<Customers> customerTableview;
+
+    @FXML
+    private TableColumn<Customers, String> addressColumn;
+
+    @FXML
+    private TableColumn<Customers, String> countryColumn;
+
+    @FXML
+    private TableColumn<Customers, String> divisionColumn;
+
+    @FXML
+    private TableColumn<Customers, String> nameColumn;
+
+    @FXML
+    private TableColumn<Customers, String> postalCodeColumn;
+
+    @FXML
+    private TableColumn<Customers, String> telephoneColumn;
+
+    @FXML
+    private TableColumn<Customers, Integer> custIDColumn;
+
+    @FXML
+    private TableColumn<Appointments, Integer> apptConIDCol;
+
+    @FXML
+    private TableColumn<Appointments, Integer> apptCustIDCol;
+
+    @FXML
+    private TableColumn<Appointments, String> apptDescCol;
+
+    @FXML
+    private TableColumn<Appointments, LocalDateTime> apptETimeCol;
+
+    @FXML
+    private TableColumn<Appointments, Integer> apptIDCol;
+
+    @FXML
+    private TableColumn<Appointments, String> apptLocCol;
+
+    @FXML
+    private TableColumn<Appointments, LocalDateTime> apptSTimeCol;
+
+    @FXML
+    private TableColumn<Appointments, String> apptTitleCol;
+
+    @FXML
+    private TableColumn<Appointments, String> apptTypeCol;
+
+    @FXML
+    private TableColumn<Appointments, Integer> apptUsrIDCol;
+
+
 
 
     @FXML
