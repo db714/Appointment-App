@@ -15,8 +15,8 @@
       <TextField fx:id="postalCodeTextBox" layoutX="92.0" layoutY="187.0" onAction="#onActionPostCodeTextBox" />
       <ComboBox fx:id="SecondLevelComboBox" layoutX="91.0" layoutY="328.0" onAction="#onActionSecondLevelComboBox" prefWidth="150.0" />
       <ComboBox fx:id="FirstLevelComboBox" layoutX="91.0" layoutY="279.0" onAction="#onActionFirstLevelComboBox" prefWidth="150.0" promptText="Country" />
-      <TextField fx:id="userIDTextBox" layoutX="92.0" layoutY="42.0" onAction="#onActionUserIDTextBox" />
-      <Label fx:id="userIDLabel" layoutX="21.0" layoutY="46.0" text="User ID:" />
+      <TextField fx:id="custIDTextBox" layoutX="92.0" layoutY="42.0" onAction="#onActionUserIDTextBox" />
+      <Label fx:id="custIDLabel" layoutX="9.0" layoutY="46.0" text="Customer ID:" />
       <Label fx:id="nameLabel" layoutX="21.0" layoutY="93.0" text="Name:" />
       <Label fx:id="addressLabel" layoutX="21.0" layoutY="142.0" text="Address:" />
       <Label fx:id="postalCodeLabel" layoutX="11.0" layoutY="191.0" text="Postal Code:" />

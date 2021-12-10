@@ -168,13 +168,38 @@ public class MainScreen implements Initializable{
     @FXML
     void onActionMainUpdateCustomerButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
+        try{
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/UpdateCustomer.fxml"));
+            loader.load();
+            UpdateCustomer updateCustomerController = loader.getController();
+            Customers c = customerTableview.getSelectionModel().getSelectedItem();
+            //FirstLevelDivisions f = (FirstLevelDivisions) customerTableview.getSelectionModel().getSelectedCells();
+            System.out.println(c.getCustDiv());
+
+            updateCustomerController.receiveCustomer(c/*,f*/);
+
+
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
         //telling program where we want it to go once button is clicked
-        scene = FXMLLoader.load(getClass().getResource("/view/UpdateCustomer.fxml"));
+        //scene = FXMLLoader.load(getClass().getResource("/view/UpdateCustomer.fxml"));
         //program makes new scene
         stage.setScene(new Scene(scene));
         //new scene starts
-        stage.show();
+        stage.show();}
+
+
+        catch(NullPointerException e){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Must select customer to update");
+            alert.showAndWait();
+
+        }
 
     }
 

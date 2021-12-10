@@ -55,4 +55,11 @@ public class DBAppointments {
 
     return apptList;
     }
+
+    //when creating appointments
+    // you'll need to add info to the customer first so that the customer id
+    // will maintain referential integrity in the database (key to keys 40 minute mark)
+
+
+    //also as far as timezones information is on "combo boxes: controlling choices (27:00)
 }

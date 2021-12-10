@@ -1,17 +1,19 @@
 package controller;
 
+import DBAccess.DBCountries;
+import DBAccess.DBCustomers;
+import DBAccess.DBFirstLevelDivisions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.FirstLevelDivisions;
+import java.util.EventObject;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,10 +23,14 @@ public class AddCustomer implements Initializable {
 
     Stage stage;
     Parent scene;
+    private static int next_ID = 3;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Made it to Add Customer Screen");
+        FirstLevelComboBox.setItems(DBCountries.getAllCountries());
+
+        FirstLevelComboBox.setPromptText("Please select a country");
 
     }
 
@@ -32,10 +38,10 @@ public class AddCustomer implements Initializable {
     private Pane Add_Customer;
 
     @FXML
-    private ComboBox<?> FirstLevelComboBox;
+    private ComboBox<String> FirstLevelComboBox;
 
     @FXML
-    private ComboBox<?> SecondLevelComboBox;
+    private ComboBox<FirstLevelDivisions> SecondLevelComboBox;
 
     @FXML
     private Label addressLabel;
@@ -68,10 +74,10 @@ public class AddCustomer implements Initializable {
     private TextField telephoneTextBox;
 
     @FXML
-    private Label userIDLabel;
+    private Label custIDLabel;
 
     @FXML
-    private TextField userIDTextBox;
+    private TextField custIDTextBox;
 
     @FXML
     private Button addCustomerCancelButton;
@@ -96,6 +102,23 @@ public class AddCustomer implements Initializable {
     @FXML
     void onActionAddCustomerSaveButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
+        try{
+
+            //this is an auto incremented key that I need to grab from database
+            int custId = ++next_ID;
+            String custName = nameTextBox.getText();
+            String custAddress = addressTextBox.getText();
+            String postCode = postalCodeTextBox.getText();
+            String phoneNum = telephoneTextBox.getText() ;
+            int custDiv = SecondLevelComboBox.getValue().getDivisionId();
+            String custCntry = FirstLevelComboBox.getValue();
+
+            DBCustomers.createCustomer(custId, custName, custAddress,postCode,phoneNum, custDiv);
+
+
+
+
+
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         //telling program where we want it to go once button is clicked
         scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
@@ -103,6 +126,17 @@ public class AddCustomer implements Initializable {
         stage.setScene(new Scene(scene));
         //new scene starts
         stage.show();
+        }
+
+
+        catch(NullPointerException e){
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error Dialog");
+            error.setContentText("Please enter values in all text fields");
+            error.showAndWait();
+        }
+
+
 
     }
 
@@ -113,6 +147,28 @@ public class AddCustomer implements Initializable {
 
     @FXML
     void onActionFirstLevelComboBox(ActionEvent event) {
+
+            System.out.println("first box worked");
+
+        int cID;
+
+        if(FirstLevelComboBox.getSelectionModel().getSelectedIndex() == 0){
+            cID = 1;
+            //secondLevelLabel.setOnAction(value-> {sourceLabel.setText("State");});
+            SecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
+        if(FirstLevelComboBox.getSelectionModel().getSelectedIndex() == 1){
+            cID = 2;
+            SecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
+        if(FirstLevelComboBox.getSelectionModel().getSelectedIndex() == 2){
+            cID = 3;
+            //secondLevelLabel.setOnAction(value-> {sourceLabel.setText("Province");});
+            SecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
 
     }
 
@@ -128,6 +184,9 @@ public class AddCustomer implements Initializable {
 
     @FXML
     void onActionSecondLevelComboBox(ActionEvent event) {
+
+        System.out.println("made it to the combo box");
+
 
     }
 

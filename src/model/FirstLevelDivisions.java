@@ -17,4 +17,12 @@ public class FirstLevelDivisions {
     public String getDivision() {
         return division;
     }
+
+    //Overrides the default toString() method that java uses on the combo box
+    @Override
+    public String toString(){
+        return((/*"#" + Integer.toString(divisionId) + " " + */division));
+    }
+
+
 }

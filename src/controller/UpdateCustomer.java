@@ -1,5 +1,7 @@
 package controller;
 
+import DBAccess.DBCountries;
+import DBAccess.DBFirstLevelDivisions;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
@@ -16,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Customers;
+import model.FirstLevelDivisions;
 
 public class UpdateCustomer implements Initializable {
     Stage stage;
@@ -25,6 +29,11 @@ public class UpdateCustomer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         System.out.println("Made it to the Update Customer Screen");
+       updateCustomerFirstLevelComboBox.setItems(DBCountries.getAllCountries());
+
+
+
+
 
     }
     @FXML
@@ -55,7 +64,7 @@ public class UpdateCustomer implements Initializable {
     private Button updateCustomerCancelButton;
 
     @FXML
-    private ComboBox<?> updateCustomerFirstLevelComboBox;
+    private ComboBox<String> updateCustomerFirstLevelComboBox;
 
     @FXML
     private TextField updateCustomerNameTextBox;
@@ -67,16 +76,16 @@ public class UpdateCustomer implements Initializable {
     private Button updateCustomerSaveButton;
 
     @FXML
-    private ComboBox<?> updateCustomerSecondLevelComboBox;
+    private ComboBox<FirstLevelDivisions> updateCustomerSecondLevelComboBox;
 
     @FXML
     private TextField updateCustomerTelephoneTextBox;
 
     @FXML
-    private TextField updateCustomerUserIDTextBox;
+    private TextField updateCustomerCustIDTextBox;
 
     @FXML
-    private Label userIDLabel;
+    private Label custIDLabel;
 
     @FXML
     void onActionUpdateCustomerAddressTextBox(ActionEvent event) {
@@ -98,6 +107,9 @@ public class UpdateCustomer implements Initializable {
 
     @FXML
     void onActionUpdateCustomerFirstLevelComboBox(ActionEvent event) {
+
+        System.out.println("this was selected on arrow click");
+
 
     }
 
@@ -127,6 +139,7 @@ public class UpdateCustomer implements Initializable {
     @FXML
     void onActionUpdateCustomerSecondLevelComboBox(ActionEvent event) {
 
+
     }
 
     @FXML
@@ -136,6 +149,72 @@ public class UpdateCustomer implements Initializable {
 
     @FXML
     void onActionUpdateCustomerUserIDTextBox(ActionEvent event) {
+
+    }
+
+    public void receiveCustomer(Customers customers){
+
+        updateCustomerCustIDTextBox.setText((String.valueOf(customers.getCustId())));
+        updateCustomerNameTextBox.setText(customers.getCustName());
+        updateCustomerAddressTextBox.setText(customers.getCustAddress());
+        updateCustomerPostalCodeTextBox.setText(customers.getCustAddress());
+        updateCustomerTelephoneTextBox.setText(customers.getPhoneNum());
+        updateCustomerFirstLevelComboBox.setValue(customers.getCustCntry());
+        System.out.println(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex());
+
+        /*int country = 0;
+
+        if(customers.getCustCntry().equals("U.S")) {country = 1;}
+        if(customers.getCustCntry().equals("UK")){ country = 2;}
+        if(customers.getCustCntry().equals("Canada")){ country = 3;}*/
+        int cID = 0;
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 0){
+            cID = 1;}
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 1){
+            cID = 2;}
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 2){
+            cID = 3;}
+
+
+
+        //This block populates the combo box with the specific division of that customer
+        for(FirstLevelDivisions f : DBFirstLevelDivisions.getAllDivisions(cID)){
+
+            if(f.getDivision().equals(customers.getCustDiv())){
+
+                updateCustomerSecondLevelComboBox.setValue(f);
+                System.out.println("It worked");
+
+                break;
+
+            }
+
+        }
+
+        updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+
+
+
+        /*//This block populates the combo box with all available options of divisions
+        int cID;
+
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 0){
+            cID = 1;
+            //secondLevelLabel.setOnAction(value-> {sourceLabel.setText("State");});
+            updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 1){
+            cID = 2;
+            updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 2){
+            cID = 3;
+            //secondLevelLabel.setOnAction(value-> {sourceLabel.setText("Province");});
+            updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }*/
+
 
     }
 

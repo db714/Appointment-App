@@ -8,6 +8,7 @@ import model.Customers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBCustomers {
 
@@ -55,10 +56,30 @@ public class DBCustomers {
     }
 
     //create a customer
-    public static void createCustomer(int custId, String custName, String custAddress, String postCode, String phoneNum){
+    public static void createCustomer(int custId, String custName, String custAddress, String postCode, String phoneNum, int custDiv){
+        try{
+        String sqlCC = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, NULL, NULL, CURRENT_TIMESTAMP , NULL, ?);";
+
+        PreparedStatement psCC = JDBC.getConnection().prepareStatement(sqlCC);
+
+        psCC.setString(1, custName);
+        psCC.setString(2, custAddress);
+        psCC.setString(3, postCode);
+        psCC.setString(4, phoneNum);
+        psCC.setInt(5, custDiv);
+
+        psCC.execute();
 
 
 
+
+
+
+
+    }
+
+        catch(SQLException e){
+            e.printStackTrace();}
     }
     //modify a customer
     public static void modifyCustomer(int custId, int cntryID, String custName, String custAddress, String postCode, String phoneNum){
