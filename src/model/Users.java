@@ -13,6 +13,13 @@ public class Users {
             this.pssWrd = pssWrd;
         }
 
+        public Users(int id, String usrName){
+
+            this.id = id;
+            this.usrName = usrName;
+
+        }
+
     public int getId() {
         return id;
     }
@@ -25,6 +32,11 @@ public class Users {
     public String getPssWrd(){
 
             return pssWrd;
+    }
+
+    @Override
+    public String toString(){
+        return(("#" + Integer.toString(id) + " " + usrName));
     }
 }
 

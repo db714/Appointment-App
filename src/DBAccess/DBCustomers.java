@@ -82,14 +82,38 @@ public class DBCustomers {
             e.printStackTrace();}
     }
     //modify a customer
-    public static void modifyCustomer(int custId, int cntryID, String custName, String custAddress, String postCode, String phoneNum){
+    public static void modifyCustomer(int custId, String custName, String custAddress, String postCode, String phoneNum, int custDiv){
 
+        try{
+
+            String sqlMC = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?;";
+
+            PreparedStatement psMC = JDBC.getConnection().prepareStatement(sqlMC);
+
+            psMC.setString(1, custName);
+            psMC.setString(2, custAddress);
+            psMC.setString(3, postCode);
+            psMC.setString(4, phoneNum);
+            psMC.setInt(5, custDiv);
+            psMC.setInt(6, custId);
+
+            psMC.execute();
+        }
+
+
+        catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
     //delete a customer
     public static void deleteCustomer(int custId, String custName, String custAddress, String postCode, String phoneNum){
 
-
+                //when this method is written, you only need to take a customer id.
+                //from there you can write a query that finds all of the customers appointments
+                //you can then create a while loop with the 'rs.next' paramenter that cycles through...
+                //all of the appointments with the given customer id and call the delete appointment method
+                //at that point you can delete the customer from the database.
     }
 }

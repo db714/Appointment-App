@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import model.*;
@@ -178,7 +179,10 @@ public class MainScreen implements Initializable{
             //FirstLevelDivisions f = (FirstLevelDivisions) customerTableview.getSelectionModel().getSelectedCells();
             System.out.println(c.getCustDiv());
 
-            updateCustomerController.receiveCustomer(c/*,f*/);
+            updateCustomerController.receiveCustomer(c);
+
+
+
 
 
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -219,18 +223,74 @@ public class MainScreen implements Initializable{
     @FXML
     void onActionMainScreenDeleteAppointmentButton(ActionEvent event) {
 
+        try {
+            Appointments selectedAppt = mainScreenAppointmentTableview.getSelectionModel().getSelectedItem();
+            int apptId = selectedAppt.getApptId();
+            Alert alertError = new Alert(Alert.AlertType.ERROR);
+            Alert alertConf = new Alert(Alert.AlertType.CONFIRMATION);
+
+            if (selectedAppt != null) {
+                alertConf.setTitle("Delete Customer");
+                alertConf.setContentText("Are you sure you wish to delete this customer?");
+
+                Optional<ButtonType> result = alertConf.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    DBAppointments.deleteAppointment(apptId);
+                    mainScreenAppointmentTableview.setItems(DBAppointments.getAllAppointments());
+                }
+
+            }
+        }
+        catch (NullPointerException e){
+
+            Alert alertError = new Alert(Alert.AlertType.ERROR);
+            alertError.setContentText("Customer must be selected");
+            alertError.showAndWait();
+        }
+
     }
 
     @FXML
     void onActionMainScreenUpdateAppointmentButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
-        stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        try{
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/UpdateAppointment.fxml"));
+            loader.load();
+            UpdateAppointment updateAppointmentController = loader.getController();
+            Appointments a = mainScreenAppointmentTableview.getSelectionModel().getSelectedItem();
+
+
+
+            updateAppointmentController.receiveAppointment(a);
+
+
+            stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
+
+
+        catch(NullPointerException e){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText("Must select appointment to update");
+            alert.showAndWait();
+
+        }
+
+       /* stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         //telling program where we want it to go once button is clicked
         scene = FXMLLoader.load(getClass().getResource("/view/UpdateAppointment.fxml"));
         //program makes new scene
         stage.setScene(new Scene(scene));
         //new scene starts
-        stage.show();
+        stage.show();*/
 
     }
 

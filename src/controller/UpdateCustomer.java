@@ -1,6 +1,7 @@
 package controller;
 
 import DBAccess.DBCountries;
+import DBAccess.DBCustomers;
 import DBAccess.DBFirstLevelDivisions;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,10 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Customers;
@@ -110,6 +108,27 @@ public class UpdateCustomer implements Initializable {
 
         System.out.println("this was selected on arrow click");
 
+        //This block populates the combo box with all available options of divisions
+        int cID;
+
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 0){
+            cID = 1;
+            //secondLevelLabel.setOnAction(value-> {sourceLabel.setText("State");});
+            updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 1){
+            cID = 2;
+            updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
+        if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 2){
+            cID = 3;
+            //secondLevelLabel.setOnAction(value-> {sourceLabel.setText("Province");});
+            updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+        }
+
+
 
     }
 
@@ -126,13 +145,37 @@ public class UpdateCustomer implements Initializable {
     @FXML
     void onActionUpdateCustomerSaveButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
+        try{
+
+            //TODO come back to do data validation if statements
+
+            int custId = Integer.parseInt(updateCustomerCustIDTextBox.getText());
+            String custName = updateCustomerNameTextBox.getText();
+            String custAddress = updateCustomerAddressTextBox.getText();
+            String postCode = updateCustomerPostalCodeTextBox.getText();
+            String phoneNum = updateCustomerTelephoneTextBox.getText();
+            int custDiv = updateCustomerSecondLevelComboBox.getValue().getDivisionId();
+            String custCntry = updateCustomerFirstLevelComboBox.getValue();
+
+            DBCustomers.modifyCustomer(custId,custName,custAddress,postCode,phoneNum,custDiv);
+
+
         stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         //telling program where we want it to go once button is clicked
         scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         //program makes new scene
         stage.setScene(new Scene(scene));
         //new scene starts
-        stage.show();
+        stage.show();}
+
+
+
+        catch (NullPointerException e){
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Error Dialog");
+            error.setContentText("Fields cannot be blank");
+            error.showAndWait();
+        }
 
     }
 
@@ -154,10 +197,12 @@ public class UpdateCustomer implements Initializable {
 
     public void receiveCustomer(Customers customers){
 
+        updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(customers.getCustId()));
+
         updateCustomerCustIDTextBox.setText((String.valueOf(customers.getCustId())));
         updateCustomerNameTextBox.setText(customers.getCustName());
         updateCustomerAddressTextBox.setText(customers.getCustAddress());
-        updateCustomerPostalCodeTextBox.setText(customers.getCustAddress());
+        updateCustomerPostalCodeTextBox.setText(customers.getPostCode());
         updateCustomerTelephoneTextBox.setText(customers.getPhoneNum());
         updateCustomerFirstLevelComboBox.setValue(customers.getCustCntry());
         System.out.println(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex());
@@ -175,7 +220,7 @@ public class UpdateCustomer implements Initializable {
         if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 2){
             cID = 3;}
 
-
+       updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
 
         //This block populates the combo box with the specific division of that customer
         for(FirstLevelDivisions f : DBFirstLevelDivisions.getAllDivisions(cID)){
@@ -191,12 +236,13 @@ public class UpdateCustomer implements Initializable {
 
         }
 
-        updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
+
+        //updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
 
 
 
-        /*//This block populates the combo box with all available options of divisions
-        int cID;
+       /* //This block populates the combo box with all available options of divisions
+
 
         if(updateCustomerFirstLevelComboBox.getSelectionModel().getSelectedIndex() == 0){
             cID = 1;
@@ -213,8 +259,8 @@ public class UpdateCustomer implements Initializable {
             cID = 3;
             //secondLevelLabel.setOnAction(value-> {sourceLabel.setText("Province");});
             updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(cID));
-        }*/
-
+        }
+*/
 
     }
 

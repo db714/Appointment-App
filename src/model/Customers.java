@@ -11,7 +11,7 @@ public class Customers {
     String custDiv;
     String custCntry;
 
-    public Customers(int custId, String custName, String custAddress, String postCode, String phoneNum, String custDiv, String custCntry){
+    public Customers(int custId, String custName, String custAddress, String postCode, String phoneNum, String custDiv, String custCntry) {
 
         this.custId = custId;
         this.custName = custName;
@@ -19,35 +19,53 @@ public class Customers {
         this.postCode = postCode;
         this.phoneNum = phoneNum;
         this.custDiv = custDiv;
-        this.custCntry= custCntry;
+        this.custCntry = custCntry;
 
     }
+
+    /*public Customers(int custId, String custName){
+
+        this.custId = custId;
+        this.custName = custName;
+    }*/
 // getter for custId
     public int getCustId() {
         return custId;
     }
-//getter for custName
+
+    //getter for custName
     public String getCustName() {
         return custName;
     }
-//getter for custAddress
+
+    //getter for custAddress
     public String getCustAddress() {
         return custAddress;
     }
-//getter for postCode
+
+    //getter for postCode
     public String getPostCode() {
         return postCode;
     }
-//getter for phoneNum
+
+    //getter for phoneNum
     public String getPhoneNum() {
         return phoneNum;
     }
-//getter for divId
+
+    //getter for divId
     public String getCustDiv() {
         return custDiv;
     }
-//getter for cntryId
+
+    //getter for cntryId
     public String getCustCntry() {
         return custCntry;
+    }
+
+
+    @Override
+    public String toString() {
+        return (("#" + Integer.toString(custId) + " " + custName));
     }
 }

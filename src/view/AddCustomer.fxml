@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="Add_Customer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="481.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomer">
    <children>
@@ -15,7 +16,10 @@
       <TextField fx:id="postalCodeTextBox" layoutX="92.0" layoutY="187.0" onAction="#onActionPostCodeTextBox" />
       <ComboBox fx:id="SecondLevelComboBox" layoutX="91.0" layoutY="328.0" onAction="#onActionSecondLevelComboBox" prefWidth="150.0" />
       <ComboBox fx:id="FirstLevelComboBox" layoutX="91.0" layoutY="279.0" onAction="#onActionFirstLevelComboBox" prefWidth="150.0" promptText="Country" />
-      <TextField fx:id="custIDTextBox" layoutX="92.0" layoutY="42.0" onAction="#onActionUserIDTextBox" />
+      <TextField fx:id="custIDTextBox" editable="false" layoutX="92.0" layoutY="42.0" onAction="#onActionUserIDTextBox" promptText="auto-generated" text="auto-generated">
+         <font>
+            <Font name="Arial Bold Italic" size="12.0" />
+         </font></TextField>
       <Label fx:id="custIDLabel" layoutX="9.0" layoutY="46.0" text="Customer ID:" />
       <Label fx:id="nameLabel" layoutX="21.0" layoutY="93.0" text="Name:" />
       <Label fx:id="addressLabel" layoutX="21.0" layoutY="142.0" text="Address:" />

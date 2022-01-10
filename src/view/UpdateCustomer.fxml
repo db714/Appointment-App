@@ -15,7 +15,7 @@
       <TextField fx:id="updateCustomerPostalCodeTextBox" layoutX="92.0" layoutY="187.0" onAction="#onActionUpdateCustomerPostalCodeTextBox" />
       <ComboBox fx:id="updateCustomerSecondLevelComboBox" layoutX="91.0" layoutY="328.0" onAction="#onActionUpdateCustomerSecondLevelComboBox" prefWidth="150.0" />
       <ComboBox fx:id="updateCustomerFirstLevelComboBox" layoutX="91.0" layoutY="279.0" onAction="#onActionUpdateCustomerFirstLevelComboBox" prefWidth="150.0" promptText="Country" />
-      <TextField fx:id="updateCustomerCustIDTextBox" layoutX="92.0" layoutY="42.0" onAction="#onActionUpdateCustomerUserIDTextBox" />
+      <TextField fx:id="updateCustomerCustIDTextBox" editable="false" layoutX="92.0" layoutY="42.0" onAction="#onActionUpdateCustomerUserIDTextBox" />
       <Label fx:id="custIDLabel" layoutX="9.0" layoutY="46.0" text="Customer ID:" />
       <Label fx:id="nameLabel" layoutX="21.0" layoutY="93.0" text="Name:" />
       <Label fx:id="addressLabel" layoutX="21.0" layoutY="142.0" text="Address:" />

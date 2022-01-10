@@ -1,6 +1,11 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.TimeZone;
 
 public class Appointments {
 
@@ -80,5 +85,25 @@ public class Appointments {
     //getter for apptUsrID
     public int getApptUsrId() {
         return apptUsrId;
+    }
+
+
+    public static ObservableList<LocalTime> getTimes(){
+        ObservableList<LocalTime> tList = FXCollections.observableArrayList();
+        //TODO this needs to be localtime instead of localdatetime
+
+        LocalTime start = LocalTime.of(8,00);
+        LocalTime end = LocalTime.MIDNIGHT.minusHours(2);
+
+        while(start.isBefore(end.plusSeconds(1))){
+            tList.add(start);
+            start = start.plusMinutes(30);
+
+        }
+
+
+
+
+     return tList;
     }
 }

@@ -6,11 +6,17 @@ public class Contacts {
     String contactName;
     String contactEmail;
 
-    public Contacts(int contactId, String contactName, String contactEmail){
+    public Contacts(int contactId, String contactName, String contactEmail) {
 
         this.contactId = contactId;
         this.contactName = contactName;
         this.contactEmail = contactEmail;
+    }
+
+    public Contacts(int contactId, String contactName) {
+
+        this.contactId = contactId;
+        this.contactName = contactName;
     }
 
     //getter for contactId
@@ -26,5 +32,10 @@ public class Contacts {
     //getter for contactEmail
     public String getContactEmail() {
         return contactEmail;
+    }
+
+    @Override
+    public String toString() {
+        return ((/*"#" + Integer.toString(contactId) + " " + */contactName));
     }
 }
