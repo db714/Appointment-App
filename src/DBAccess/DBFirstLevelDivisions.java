@@ -9,8 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**Class that controls database operations for first level divisions.*/
 public class DBFirstLevelDivisions {
 
+    /**Method uses SQL query to populate all first level divisions and stores them in an observable list.
+     @param cID */
     public static ObservableList<FirstLevelDivisions> getAllDivisions(int cID) {
         //this.cID = cID;
         ObservableList<FirstLevelDivisions> dList = FXCollections.observableArrayList();

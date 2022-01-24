@@ -22,11 +22,10 @@ import controller.AddAppointment;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ResourceBundle;
 
+/**Controller class for updating an appointment.*/
 public class UpdateAppointment implements Initializable {
 
     Stage stage;
@@ -94,6 +93,7 @@ public class UpdateAppointment implements Initializable {
 
     }
 
+    /**Method runs if the cancel button is pressed. Program returns to Main Screen. */
     @FXML
     void onActionUpdateApptScreenCnclButt(javafx.event.ActionEvent actionEvent) throws IOException {
 
@@ -136,6 +136,7 @@ public class UpdateAppointment implements Initializable {
 
     }
 
+    /**Method runs if save button is pressed.  Text fields are parsed into variables and placed in a object to be modified DB. Program then returns to Main screen. */
     @FXML
     void onActionUpdateApptScreenSaveButt(javafx.event.ActionEvent actionEvent) throws IOException {
 
@@ -155,9 +156,64 @@ public class UpdateAppointment implements Initializable {
             int apptUsrId = updateApptScreenUsrIDCombo.getValue().getId();
             int apptCntctId = updateApptScreenConCombo.getValue().getContactId();
 
+
+            //Zone Id for current time zone
+            ZoneId currentZoneID =ZoneId.systemDefault();
+
+            //selected start time converted to current time zone
+            ZonedDateTime currZoneTime = startTime.atZone(currentZoneID);
+
+            //selected end time converted to current time zone
+            ZonedDateTime currEndZoneTime = endTime.atZone(currentZoneID);
+
+            //selected start time converted to eastern time zone
+            ZonedDateTime eastZoneTime = currZoneTime.withZoneSameInstant(ZoneId.of("America/New_York"));
+
+            //selected end time converted to eastern time zone
+            ZonedDateTime eastEndZoneTime = currEndZoneTime.withZoneSameInstant(ZoneId.of("America/New_York"));
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Error");
+
+            for (Appointments a : DBAppointments.getAllAppointments()) {
+
+
+
+
+                if (a.getApptCustId() == apptCustId && a.getApptId()!= apptId) {
+
+
+                    //this statement checks for outside appointments
+                    if ((startTime.isBefore(a.getStartTime()) || startTime.isEqual(a.getStartTime())) && (endTime.isAfter(a.getEndTime())) || endTime.isEqual(a.getEndTime())) {
+
+
+                        alert.setContentText("There is another appointment during this time");
+                        alert.showAndWait();
+                        return;
+
+                    }
+
+                    //this statement checks for the end time
+                    if ((endTime.isBefore(a.getEndTime()) || endTime.isEqual(a.getEndTime())) && endTime.isAfter(a.getStartTime())) {
+
+
+                        alert.setContentText("There is another appointment during this time");
+                        alert.showAndWait();
+                        return;
+                    }
+
+                    //this statement checks for start time
+                    if ((startTime.isAfter(a.getStartTime()) || startTime.isEqual(a.getStartTime())) && startTime.isBefore(a.getEndTime())) {
+
+
+                        alert.setContentText("There is another appointment during this time");
+                        alert.showAndWait();
+                        return;
+
+                    }
+                }
+            }
 
             if(updateApptScreenStartTimeCombo.getValue().isAfter(updateApptScreenEndTimeCombo.getValue())||updateApptScreenStartTimeCombo.getValue().equals(updateApptScreenEndTimeCombo.getValue())){
 
@@ -169,6 +225,15 @@ public class UpdateAppointment implements Initializable {
             if(updateApptScreenDatePicker.getValue().isBefore(LocalDate.now())){
 
                 alert.setContentText("Date cannot be scheduled before today!");
+                alert.showAndWait();
+                return;
+            }
+
+            if(eastZoneTime.isBefore(ZonedDateTime.parse(updateApptScreenDatePicker.getValue() + "T08:00:00.-05:00[America/New_York]")) || eastEndZoneTime.isAfter(ZonedDateTime.parse(updateApptScreenDatePicker.getValue() + "T22:00:00.-05:00[America/New_York]"))){
+
+
+
+                alert.setContentText("Appointment time needs to be between normal business hours (8am -10pm EST)");
                 alert.showAndWait();
                 return;
             }
@@ -222,7 +287,7 @@ public class UpdateAppointment implements Initializable {
 
     }
 
-
+    /**Method takes in selected appointment from Main Screen and autopopulates fields. @param appointments */
     public void receiveAppointment(Appointments appointments){
 
 

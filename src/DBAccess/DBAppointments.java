@@ -11,9 +11,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**Class that controls the database operations for the appointments.*/
 public class DBAppointments {
 
 
+    /**Method uses SQL query to grab all appointments in the database and places them inside an observable list. @return apptList */
     public static ObservableList<Appointments> getAllAppointments(){
 
         ObservableList<Appointments> apptList = FXCollections.observableArrayList();
@@ -57,6 +59,18 @@ public class DBAppointments {
     return apptList;
     }
 
+    /**Method uses SQL query to add new appointments to database.
+      @param apptId
+     @param apptTitle
+     @param apptDscrptn
+     @param apptLctn
+     @param apptType
+     @param startTime
+     @param endTime
+     @param apptCustId
+     @param apptUsrId
+     @param apptCntctId
+      */
     public static void createAppointment(int apptId, String apptTitle, String apptDscrptn, String apptLctn, String apptType, LocalDateTime startTime, LocalDateTime endTime, int apptCustId, int apptUsrId, int apptCntctId){
 
         try{
@@ -89,6 +103,8 @@ public class DBAppointments {
     // will maintain referential integrity in the database (key to keys 40 minute mark)
 
 
+    /**Method uses SQL query to delete appointment from database.
+     * @param apptId */
     public static void deleteAppointment(int apptId){
 
         try{
@@ -110,6 +126,17 @@ public class DBAppointments {
 
     }
 
+    /**Method uses SQL query to modify an existing appointment from  database.
+     @param apptId
+     @param apptTitle
+     @param apptDscrptn
+     @param apptLctn
+     @param apptType
+     @param startTime
+     @param endTime
+     @param apptCustId
+     @param apptUsrId
+     @param apptCntctId */
     public static void modifyAppointment(int apptId, String apptTitle, String apptDscrptn, String apptLctn, String apptType, LocalDateTime startTime, LocalDateTime endTime, int apptCustId, int apptUsrId, int apptCntctId){
 
         try{
@@ -139,5 +166,5 @@ public class DBAppointments {
     }
 
 
-    //also as far as timezones information is on "combo boxes: controlling choices (27:00)
+
 }

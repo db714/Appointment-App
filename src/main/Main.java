@@ -14,16 +14,17 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/** Main Class.*/
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/LoginScreen.fxml"));
-        stage.setTitle("Login");
+        stage.setTitle("");
         stage.setScene(new Scene(root, 350, 250));
         stage.show();
     }
-
+/**Main method that runs the program. */
     public static void main(String[] args) throws SQLException {
 
         Connection conn = JDBC.openConnection();

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** This is the controller class for adding a new customer*/
 public class AddCustomer implements Initializable {
 
     Stage stage;
@@ -85,7 +86,7 @@ public class AddCustomer implements Initializable {
     @FXML
     private Button addCustomerSaveButton;
 
-
+/**Method runs if the cancel button is pressed on the add customer screen. Application returns to main screen. */
     @FXML
     void onActionAddCustomerCancelButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
@@ -99,6 +100,7 @@ public class AddCustomer implements Initializable {
 
     }
 
+    /**Method runs if the save button is pressed.  The textfields are parsed and put into variables that create a Customer object that is saved to DB. Program then returns to Main Screen. */
     @FXML
     void onActionAddCustomerSaveButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
@@ -145,10 +147,11 @@ public class AddCustomer implements Initializable {
 
     }
 
+    /** Method autopopulates SecondLevel combobox if an option is selected from here. */
     @FXML
     void onActionFirstLevelComboBox(ActionEvent event) {
 
-            System.out.println("first box worked");
+
 
         int cID;
 
@@ -185,7 +188,7 @@ public class AddCustomer implements Initializable {
     @FXML
     void onActionSecondLevelComboBox(ActionEvent event) {
 
-        System.out.println("made it to the combo box");
+
 
 
     }

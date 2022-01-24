@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import model.Customers;
 import model.FirstLevelDivisions;
 
+/**Controller class that updates an existing customer.*/
 public class UpdateCustomer implements Initializable {
     Stage stage;
     Parent scene;
@@ -90,6 +91,7 @@ public class UpdateCustomer implements Initializable {
 
     }
 
+    /**Method runs if the cancel button is pressed.  Changes are discarded and program returns to Main Screen. */
     @FXML
     void onActionUpdateCustomerCancelButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
@@ -103,6 +105,7 @@ public class UpdateCustomer implements Initializable {
 
     }
 
+    /**Method autopopulates secondlevel combo if populated with a value. */
     @FXML
     void onActionUpdateCustomerFirstLevelComboBox(ActionEvent event) {
 
@@ -142,6 +145,7 @@ public class UpdateCustomer implements Initializable {
 
     }
 
+    /**Method runs if save button is pressed.  Text fields are parsed, put into variables, and made into an object that is added to DB. Program returns to Main Screen. */
     @FXML
     void onActionUpdateCustomerSaveButton(javafx.event.ActionEvent actionEvent) throws IOException {
 
@@ -195,6 +199,7 @@ public class UpdateCustomer implements Initializable {
 
     }
 
+    /**Method takes customer selection from Main screen and autopopulates fields on update form. @param customers */
     public void receiveCustomer(Customers customers){
 
         updateCustomerSecondLevelComboBox.setItems(DBFirstLevelDivisions.getAllDivisions(customers.getCustId()));

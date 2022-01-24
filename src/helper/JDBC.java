@@ -2,6 +2,7 @@ package helper;
 
 import java.sql.*;
 
+/**Class that connects api to connect to database.*/
 public abstract class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -10,9 +11,10 @@ public abstract class JDBC {
     private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
-    private static String password = "passw0rd!"; // Password
+    private static String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
+    /**Method that opens the connections to the database. */
     public static Connection openConnection()
     {
         try {
@@ -36,12 +38,15 @@ public abstract class JDBC {
         return connection;
     }
 
+    /**Method that shows the status of the connection to the database.
+     @return connection */
     //need to get the connection
     public static Connection getConnection(){
 
         return connection;
     }
 
+    /**Method that closes the connection to the database. */
     public static void closeConnection() {
         try {
             connection.close();

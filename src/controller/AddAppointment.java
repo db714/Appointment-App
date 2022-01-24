@@ -21,11 +21,11 @@ import model.Users;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
+/**Add Appointment class. Controller class that controls the adding of an appointment*/
 public class AddAppointment implements Initializable {
 
     Stage stage;
@@ -51,15 +51,20 @@ public class AddAppointment implements Initializable {
         String time = "09:45:00";
         LocalDateTime comb = LocalDateTime.parse(date + t + time);
         System.out.println(comb);
-        LocalDate x = LocalDate.now();
-        LocalTime y = LocalTime.now();
-        LocalDateTime w = LocalDateTime.now();
+
         w = w.of(x,y);
         System.out.println(w + "this worked");*/
+        ZoneId cID = ZoneId.of("America/Chicago");
+        ZoneId estID = ZoneId.of("America/New_York");
+        LocalDateTime w = LocalDateTime.now();
+        ZonedDateTime z = w.atZone(cID);
+        ZonedDateTime zz = z.withZoneSameInstant(ZoneId.of("America/New_York"));
+        System.out.println("my time: " + z.getHour());
+        System.out.println("eastern time: " + zz.getHour());
 
 
 
-        //TODO this is how you would convert from localtime to localdatetime
+
 
 
         addApptScreenStartTimeCombo.setItems(Appointments.getTimes());
@@ -111,6 +116,7 @@ public class AddAppointment implements Initializable {
 
     }
 
+    /** method runs if the cancel button is pressed and returns to main screen. */
     @FXML
     void onActionAddApptScreenCnclButt(javafx.event.ActionEvent actionEvent) throws IOException {
 
@@ -134,6 +140,7 @@ public class AddAppointment implements Initializable {
 
     }
 
+    /**method that runs if a date is selected from the datepicker widget. */
     @FXML
     void onActionAddApptScreenDatePicker(ActionEvent event) {
 
@@ -157,60 +164,138 @@ public class AddAppointment implements Initializable {
 
     }
 
+    /**Method runs when the save button is pressed. All fields are saved into object and sent to DB. Program returns to Main Screen. */
     @FXML
     void onActionAddApptScreenSaveButt(javafx.event.ActionEvent actionEvent) throws IOException {
 
         LocalDateTime startTime = null;
         LocalDateTime endTime = null;
 
-        try{
+
+
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error");
+
+        try {
             int apptId = 0;
             String apptTitle = addApptScreenTitleTxtBox.getText();
             String apptDscrptn = addApptScreenDescTxtBox.getText();
             String apptLctn = addApptScreenLctnTxtBox.getText();
             String apptType = addApptScreenTypeCombo.getValue().toString();
             LocalDate apptDate = addApptScreenDatePicker.getValue();
-            startTime = startTime.of(addApptScreenDatePicker.getValue(),addApptScreenStartTimeCombo.getValue());
-            endTime = endTime.of(addApptScreenDatePicker.getValue(),addApptScreenStartTimeCombo.getValue());
+            startTime = startTime.of(addApptScreenDatePicker.getValue(), addApptScreenStartTimeCombo.getValue());
+            endTime = endTime.of(addApptScreenDatePicker.getValue(), addApptScreenEndTimeCombo.getValue());
             int apptCustId = addApptScreenCustIDCombo.getValue().getCustId();
             int apptUsrId = addApptScreenUsrIDCombo.getValue().getId();
             int apptCntctId = addApptScreenConCombo.getValue().getContactId();
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
+            //Zone Id for current time zone
+            ZoneId currentZoneID =ZoneId.systemDefault();
 
-            if(addApptScreenStartTimeCombo.getValue().isAfter(addApptScreenEndTimeCombo.getValue())||addApptScreenStartTimeCombo.getValue().equals(addApptScreenEndTimeCombo.getValue())){
+            //selected start time converted to current time zone
+            ZonedDateTime currZoneTime = startTime.atZone(currentZoneID);
+
+            //selected end time converted to current time zone
+            ZonedDateTime currEndZoneTime = endTime.atZone(currentZoneID);
+
+            //selected start time converted to eastern time zone
+            ZonedDateTime eastZoneTime = currZoneTime.withZoneSameInstant(ZoneId.of("America/New_York"));
+
+            //selected end time converted to eastern time zone
+            ZonedDateTime eastEndZoneTime = currEndZoneTime.withZoneSameInstant(ZoneId.of("America/New_York"));
+
+
+
+
+            for (Appointments a : DBAppointments.getAllAppointments()) {
+
+
+
+
+                if (a.getApptCustId() == apptCustId) {
+
+
+                    //this statement checks for outside appointments
+                    if ((startTime.isBefore(a.getStartTime()) || startTime.isEqual(a.getStartTime())) && (endTime.isAfter(a.getEndTime())) || endTime.isEqual(a.getEndTime())) {
+
+
+                        alert.setContentText("There is another appointment during this time");
+                        alert.showAndWait();
+                        return;
+
+                    }
+
+                    //this statement checks for the end time
+                    if ((endTime.isBefore(a.getEndTime()) || endTime.isEqual(a.getEndTime())) && endTime.isAfter(a.getStartTime())) {
+
+
+                        alert.setContentText("There is another appointment during this time");
+                        alert.showAndWait();
+                        return;
+                    }
+
+                    //this statement checks for start time
+                    if ((startTime.isAfter(a.getStartTime()) || startTime.isEqual(a.getStartTime())) && startTime.isBefore(a.getEndTime())) {
+
+
+                        alert.setContentText("There is another appointment during this time");
+                        alert.showAndWait();
+                        return;
+
+                    }
+                }
+            }
+
+            if (addApptScreenStartTimeCombo.getValue().isAfter(addApptScreenEndTimeCombo.getValue()) || addApptScreenStartTimeCombo.getValue().equals(addApptScreenEndTimeCombo.getValue())) {
 
                 alert.setContentText("Start time cannot be after/same as Finish time!");
                 alert.showAndWait();
                 return;
             }
 
-            if(addApptScreenDatePicker.getValue().isBefore(LocalDate.now())){
+            if (addApptScreenDatePicker.getValue().isBefore(LocalDate.now())) {
 
                 alert.setContentText("Date cannot be scheduled before today!");
                 alert.showAndWait();
                 return;
             }
 
-            else{
+            if(eastZoneTime.isBefore(ZonedDateTime.parse(addApptScreenDatePicker.getValue() + "T08:00:00.-05:00[America/New_York]")) || eastEndZoneTime.isAfter(ZonedDateTime.parse(addApptScreenDatePicker.getValue() + "T22:00:00.-05:00[America/New_York]"))){
 
 
-           DBAppointments.createAppointment(apptId,apptTitle,apptDscrptn,apptLctn,apptType,startTime,endTime,apptCustId,apptUsrId,apptCntctId);}
+
+                alert.setContentText("Appointment time needs to be between normal business hours (8am -10pm EST)");
+                alert.showAndWait();
+                return;
+            }
+
+            else {
 
 
-        stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        //telling program where we want it to go once button is clicked
-        scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
-        //program makes new scene
-        stage.setScene(new Scene(scene));
-        //new scene starts
-        stage.show();}
+                DBAppointments.createAppointment(apptId, apptTitle, apptDscrptn, apptLctn, apptType, startTime, endTime, apptCustId, apptUsrId, apptCntctId);
+            }
+
+
+            stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            //telling program where we want it to go once button is clicked
+            scene = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
+            //program makes new scene
+            stage.setScene(new Scene(scene));
+            //new scene starts
+            stage.show();
+        }
 
         catch (NullPointerException e){
 
-        }
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Error Dialog");
+                error.setContentText("Fields cannot be blank");
+                error.showAndWait();
+            }
+
+
 
     }
 

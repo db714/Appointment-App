@@ -10,9 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**Class that controls database operations for customer.*/
 public class DBCustomers {
 
 
+    /**Method uses SQL to populate all customers from database and then stores them in an observable list. */
     //adds all customers to an observable list
     public static ObservableList<Customers> getAllCustomers(){
 
@@ -55,6 +57,13 @@ public class DBCustomers {
         return custList;
     }
 
+    /**Method uses SQL query to create a customer in the database.
+     @param custId
+     @param custName
+     @param custAddress
+     @param postCode
+     @param phoneNum
+     @param custDiv */
     //create a customer
     public static void createCustomer(int custId, String custName, String custAddress, String postCode, String phoneNum, int custDiv){
         try{
@@ -81,6 +90,14 @@ public class DBCustomers {
         catch(SQLException e){
             e.printStackTrace();}
     }
+
+    /**Method uses SQL query to modify existing customer in database.
+     @param custId
+     @param custName
+     @param custAddress
+     @param postCode
+     @param phoneNum
+     @param custDiv */
     //modify a customer
     public static void modifyCustomer(int custId, String custName, String custAddress, String postCode, String phoneNum, int custDiv){
 
@@ -107,13 +124,26 @@ public class DBCustomers {
 
     }
 
+    /**Method uses SQL query to delete customer from database.
+     @param custId */
     //delete a customer
-    public static void deleteCustomer(int custId, String custName, String custAddress, String postCode, String phoneNum){
+    public static void deleteCustomer(int custId){
 
-                //when this method is written, you only need to take a customer id.
-                //from there you can write a query that finds all of the customers appointments
-                //you can then create a while loop with the 'rs.next' paramenter that cycles through...
-                //all of the appointments with the given customer id and call the delete appointment method
-                //at that point you can delete the customer from the database.
+        try{
+            String sqlDC = "DELETE from customers WHERE Customer_ID = ?";
+
+            PreparedStatement psDC = JDBC.getConnection().prepareStatement(sqlDC);
+
+            psDC.setInt(1, custId);
+
+            psDC.execute();
+        }
+
+        catch(SQLException e){
+
+            e.printStackTrace();
+
+        }
+
     }
 }

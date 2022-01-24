@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**Class that holds statements for opening and closing a database connection.
+ @return statement */
 public class DBQuery {
 
     private static Statement statement;

@@ -9,8 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**Class that controls database operations for countries.*/
 public class DBCountries {
 
+    /**Method uses SQL query to populate all countries in database and stores them in an observable list.
+     @return countryList */
     public static ObservableList<String> getAllCountries(){
 
         ObservableList<String> countryList = FXCollections.observableArrayList();
