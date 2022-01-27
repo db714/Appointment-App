@@ -358,6 +358,11 @@ public class MainScreen implements Initializable{
                 Optional<ButtonType> result = alertConf.showAndWait();
 
                 if (result.isPresent() && result.get() == ButtonType.OK) {
+
+                    Alert apptConfAlert = new Alert(Alert.AlertType.INFORMATION);
+                    apptConfAlert.setTitle("Delete Appointment Confirmation");
+                    apptConfAlert.setContentText("Appointment: "+apptId+ " Type: "+ selectedAppt.getApptType()+ " was deleted successfully!");
+                    apptConfAlert.showAndWait();
                     DBAppointments.deleteAppointment(apptId);
                     mainScreenAppointmentTableview.setItems(DBAppointments.getAllAppointments());
                 }
