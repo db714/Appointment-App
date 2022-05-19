@@ -1,7 +1,15 @@
 # Appointment_App
--This is an appointment application for Software 2(C195). The application allows the user to add/modify/update Customers as well as add/modify/delete Appointments. The application also has 3 different reports that can be populated.
+-This is an appointment application written in the Java Language. The application allows the user to add/modify/update Customers as well as add/modify/delete Appointments. The application also has 3 different reports that can be populated.
 
--David Brown(student id:001313638), dbro833@wgu.edu, student application version(1.0), 01/24/2022
+Implementations include:
+-Timezone implementation for customers based on location.
+-Appointment reminders (within 15 minutes)
+-User verification Login screen
+-Text I/O file recording login attempts
+-Second-level division population given First-Level
+-Relational Database Management
+
+-Created 01/24/2022
 
 (Build Information)
 -IDE: IntelliJ Community(2021.1.3)
@@ -17,6 +25,8 @@
 
 (MySQL connector)
 -verison 8.0.26
+
+
 
 
 
