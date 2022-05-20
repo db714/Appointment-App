@@ -8,6 +8,7 @@ Implementations include:
 -Text I/O file recording login attempts
 -Second-level division population given First-Level
 -Relational Database Management
+-Created a JavaDoc to describe the methods used in the application.
 
 -Created 01/24/2022
 
